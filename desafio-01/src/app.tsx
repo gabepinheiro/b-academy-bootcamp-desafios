@@ -1,9 +1,11 @@
+import Button from "./components/Button";
 import Container from "./components/Container";
 import Content from "./components/Content";
 import FlexContainer from "./components/Flex/FlexContainer";
 import FlexItem from "./components/Flex/FlexItem";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
+import { H2 } from "./components/Heading";
 import Link from "./components/Link";
 import Logo from "./components/Logo";
 import Menu from "./components/Menu";
@@ -21,26 +23,34 @@ const App = () => (
         <Link href="#">Home</Link>
         <Link href="#">About</Link>
         <Link href="#">Contact</Link>
+        <Button kind="secondary">Sign in</Button>
       </Navigation>
     </Menu>
 
-    <FlexItem flexGrow="1">
-      <FlexContainer>
-        <FlexItem>
-          <Sidebar>
-            <h2>Sidebar</h2>
-          </Sidebar>
+      <FlexItem flexGrow="1">
+        <FlexContainer>
+          <FlexItem>
+            <Sidebar>
+              <H2 children="Lorem" />
+              <p>
+                dolor sit amet consectetur adipisicing elit. Nostrum, recusandae ea. Inventore suscipit animi porro accusantium delectus, autem facere consequuntur rem. Facilis, velit! Ea, hic ad laboriosam totam dolorem culpa.
+              </p>
+              <Button kind="primary">More</Button>
+            </Sidebar>
+          </FlexItem>
+          <FlexItem>
+            <Content>
+              <H2 children="Lorem"/>
+              <p>
+                dolor sit amet consectetur adipisicing elit. Nostrum, recusandae ea. Inventore suscipit animi porro accusantium delectus, autem facere consequuntur rem. Facilis, velit! Ea, hic ad laboriosam totam dolorem culpa.
+              </p>
+              <Button kind="secondary">More</Button>
+            </Content>
         </FlexItem>
-        <FlexItem flexGrow="1">
-          <Content>
-            <h2>Content</h2>
-          </Content>
-        </FlexItem>
-      </FlexContainer>
-    </FlexItem>
-    
+        </FlexContainer>
+      </FlexItem>
     <Footer>
-      <h2>Footer</h2>
+      <p>Brainn</p>
     </Footer>
   </Container>
 )

@@ -4,7 +4,9 @@ type FlexItemProps = {
 }
 
 const FlexItem = ({ children, flexGrow }: FlexItemProps) => (
-  <div className={`flex-item flex-grow${flexGrow}`}>
+  <div 
+    className={
+      `flex-item ${!!flexGrow ? `flex-grow${flexGrow}` : ''}`}>
     {children}
   </div>
 )
