@@ -67,7 +67,10 @@ const App = () => {
 
           <FlexItem flexGrow="1">
             <FlexContainer>
-              <Sidebar articles={articles}/>
+              <Sidebar 
+                articles={articles}
+                setTitle={setTitle}
+                setContent={setContent}/>
 
               <FlexItem>
                 <Content title={title} content={content}/>
