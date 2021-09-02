@@ -18,12 +18,12 @@
 }
 
 a{
-  color: #fff;
+  color: #000;
   text-decoration: none;
 }
 
 a:hover {
-  color: #000;
+  color: #fff;
 }
 
 #root .container {
@@ -44,6 +44,26 @@ a:hover {
 
 .flex-container {
   display: flex;
+}
+
+.gap-8{
+  gap: 0.5rem
+}
+
+.gap-16{
+  gap: 1rem
+}
+
+.gap-32{
+  gap: 2rem;
+}
+
+.column {
+  flex-direction: row;
+}
+
+.column {
+  flex-direction: column;
 }
 
 header {
@@ -73,11 +93,23 @@ footer {
 }
 
 aside {
-  flex-basis: 600px;
+  flex-basis: 300px;
+}
+
+aside > h2 {
+  margin-bottom: 1rem;
+}
+aside a:hover {
+  color: var(--color-primary);
+  text-decoration: underline;
 }
 
 aside .button {
   margin-top: 1rem;
+}
+
+main > h2 {
+  margin-bottom: 1rem;
 }
 
 main .button {

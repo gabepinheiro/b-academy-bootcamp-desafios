@@ -1,11 +1,10 @@
 type ButtonProps = {
   children: React.ReactNode
-  kind?: 'primary' | 'secondary'
+  kind: 'primary' | 'secondary'
 }
 
 const Button = ({ children, kind = 'primary'}: ButtonProps) => (
-  <button 
-    className={`button ${kind === 'primary' ? 'primary': 'secondary'}`}>
+  <button className={`button ${kind}`}>
     {children}
   </button>
 )
