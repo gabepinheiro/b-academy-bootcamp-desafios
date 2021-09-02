@@ -1,10 +1,15 @@
+import { H2 } from "../Heading"
+
 type ContentProps = {
-  children: React.ReactNode
+  title: string
+  content: React.ReactNode
 }
 
-const Content = ({children}: ContentProps) => (
+const Content = ({ title, content }: ContentProps) => (
   <main>
-      {children}
+    <H2 children={title} />
+
+    <p>{content}</p>     
   </main>
 )
 

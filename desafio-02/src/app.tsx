@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Button from "./components/Button";
 import Container from "./components/Container";
 import Content from "./components/Content";
@@ -5,7 +6,6 @@ import FlexContainer from "./components/Flex/FlexContainer";
 import FlexItem from "./components/Flex/FlexItem";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-import { H2 } from "./components/Heading";
 import Link from "./components/Link";
 import Logo from "./components/Logo";
 import Menu from "./components/Menu";
@@ -47,6 +47,9 @@ const articles: Article[] = [
 ]
 
 const App = () => {
+  const [title, setTitle] = useState(articles[0].title)
+  const [content, setContent] = useState(articles[0].content)
+
   return (
       <Container>
         <Header>
@@ -67,13 +70,7 @@ const App = () => {
               <Sidebar articles={articles}/>
 
               <FlexItem>
-                <Content>
-                  <H2 children="Lorem"/>
-                  <p>
-                    dolor sit amet consectetur adipisicing elit. Nostrum, recusandae ea. Inventore suscipit animi porro accusantium delectus, autem facere consequuntur rem. Facilis, velit! Ea, hic ad laboriosam totam dolorem culpa.
-                  </p>
-                  <Button kind="secondary">More</Button>
-                </Content>
+                <Content title={title} content={content}/>
             </FlexItem>
             </FlexContainer>
           </FlexItem>
