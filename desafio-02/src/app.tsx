@@ -22,27 +22,27 @@ export type Article  = {
 const articles: Article[] = [
   {
     id: 1,
-    title: 'Article 01',
-    content: 'Article 01',
-    slug: 'article-01'
+    title: 'JavaScript',
+    content: 'JavaScript é uma linguagem de programação interpretada estruturada, de script em alto nível com tipagem dinâmica fraca e multiparadigma. Juntamente com HTML e CSS, o JavaScript é uma das três principais tecnologias da World Wide Web.',
+    slug: 'article-javascript'
   },
   {
     id: 2,
-    title: 'Article 02',
-    content: 'Article 02',
-    slug: 'article-02'
+    title: 'React',
+    content: 'O React é uma biblioteca JavaScript de código aberto com foco em criar interfaces de usuário em páginas web. É mantido pelo Facebook, Instagram, outras empresas e uma comunidade de desenvolvedores individuais. É utilizado nos sites da Netflix, Imgur, Feedly, Airbnb, SeatGeek, HelloSign, Walmart e outros.',
+    slug: 'article-react'
   },
   {
     id: 3,
-    title: 'Article 03',
-    content: 'Article 03',
-    slug: 'article-03'
+    title: 'TypeScript',
+    content: 'TypeScript é uma linguagem de programação de código aberto desenvolvida pela Microsoft. É um superconjunto sintático estrito de JavaScript e adiciona tipagem estática opcional à linguagem.',
+    slug: 'article-typescript'
   },
   {
     id: 4,
-    title: 'Article 04',
-    content: 'Article 04',
-    slug: 'article-04'
+    title: 'Node.js',
+    content: 'Node.js é um software de código aberto, multiplataforma, baseado no interpretador V8 do Google e que permite a execução de códigos JavaScript fora de um navegador web.',
+    slug: 'article-nodejs'
   },
 ]
 
@@ -77,6 +77,7 @@ const App = () => {
             </FlexItem>
             </FlexContainer>
           </FlexItem>
+          
         <Footer>
           <p>Brainn</p>
         </Footer>
