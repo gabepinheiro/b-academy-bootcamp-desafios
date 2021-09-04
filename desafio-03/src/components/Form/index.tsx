@@ -1,69 +1,85 @@
 import { Car } from "../../App"
 import { post } from "../../http"
 import { url } from '../../App'
-
-type GetFormElement = (target: HTMLFormElement) =>
-  (elementName: string) =>
-  HTMLInputElement
-
-const getFormElement: GetFormElement = (target) => (elementName) => {
-  return target[elementName]
-}
+import React, { useState } from "react"
 
 type FormProps = {
   setCar: (car: Car) => void
 }
 
+const initialState = {
+    brandModel: '',
+    color: '',
+    image: '',
+    plate: '',
+    year: ''
+}
+
 const Form = ({ setCar }: FormProps) => {
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const [carFields, setCarFields] = useState<Car>(initialState)
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCarFields((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    const getElement = getFormElement(e.currentTarget)
-    const image = getElement('image')
+    const result = await post(url, carFields)
 
-   const car: Car = {
-    image: image.value, 
-    brandModel: getElement('brand-model').value,
-    year: getElement('year').value,
-    plate: getElement('plate').value,
-    color: getElement('color').value,
-   } 
+    if (result.error) {
+      console.log('deu erro na hora de cadastrar', result.message)
+      return
+    }
 
-   const result = await post(url, car)
-
-   if (result.error) {
-     console.log('deu erro na hora de cadastrar', result.message)
-     return
-   }
-
-   setCar({...car})
+    setCar({...carFields})
+    setCarFields({...initialState})
   }
 
   return (
     <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="image">Imagem (URL)</label>
-          <input type="text" id="image" name="image" />
+          <input 
+            autoFocus
+            value={carFields.image}
+            onChange={handleChange}
+            type="text" id="image" name="image" />
         </div>
 
         <div>
           <label htmlFor="brand-model">Marca / Modelo</label>
-          <input type="text" id="brand-model" name="brand-model" />
+          <input 
+            value={carFields.brandModel}
+            onChange={handleChange}
+            type="text" id="brand-model" name="brandModel" />
         </div>
 
         <div>
           <label htmlFor="year">Ano</label>
-          <input type="number" id="year" name="year" />
+          <input 
+            value={carFields.year}
+            onChange={handleChange}
+            type="number" id="year" name="year" />
         </div>
 
         <div>
           <label htmlFor="plate">Placa</label>
-          <input type="text" id="plate" name="plate" />
+          <input 
+            value={carFields.plate}
+            onChange={handleChange}
+            type="text" id="plate" name="plate" />
         </div>
 
         <div>
           <label htmlFor="color">Cor</label>
-          <input type="text" id="color" name="color" />
+          <input 
+            value={carFields.color}
+            onChange={handleChange}
+            type="text" id="color" name="color" />
         </div>
 
         <button type="submit">Cadastrar carro</button>
