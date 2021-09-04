@@ -45,7 +45,7 @@ function App() {
   return (
    <>
     <Form setCar={setCar}/>
-    <Table cars={cars}/>
+    <Table cars={cars} setCars={setCars}/>
    </>
   );
 }

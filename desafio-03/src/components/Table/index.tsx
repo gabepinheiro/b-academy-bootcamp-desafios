@@ -1,10 +1,22 @@
-import { Car } from "../../App"
+import { Car, url } from "../../App"
+import { del } from "../../http"
 
 type TableProps = {
   cars: Car[]
+  setCars: (cars: Car[]) => void
 }
 
-const Table = ({ cars }: TableProps) => {
+const Table = ({ cars, setCars }: TableProps) => {
+  const handleDelete = async (plate: string) => {
+    const result = await del(url, { plate: plate ?? '' })
+
+    if (result.error) {
+      console.log('erro ao deletar', result.message)
+      return
+    }
+
+    setCars([...cars].filter(car => car.plate !== plate))
+  }
   return (
     <table style={{"borderWidth":"1px", 'borderStyle':'solid'}}>
         <thead>
@@ -20,6 +32,7 @@ const Table = ({ cars }: TableProps) => {
 
         <tbody>
           {cars.length === 0 && <tr><td colSpan={6}>Nenhum carro cadastrado</td></tr> }
+          
           {cars.map(({ image, brandModel, plate, year, color }) => {
             return (
               <tr key={plate}>
@@ -28,6 +41,13 @@ const Table = ({ cars }: TableProps) => {
                 <td>{plate}</td>
                 <td>{year}</td>
                 <td>{color}</td>
+                <td>
+                  <button 
+                    onClick={() => handleDelete(plate)}
+                  >
+                    Deletar
+                  </button>
+                </td>
               </tr>
             )
           })}
