@@ -5,7 +5,7 @@ import Form from './components/Form'
 import Table from './components/Table'
 import { get } from './http'
 
-const url = 'http://localhost:3333/cars'
+export const url = 'http://localhost:3333/cars'
 
 export type Car = {
   image: string
@@ -16,6 +16,7 @@ export type Car = {
 }
 
 function App() {
+  const [car, setCar] = useState<Car | null>(null)
   const [cars, setCars] = useState<Car[]>([])
 
   useEffect(() => {
@@ -27,9 +28,23 @@ function App() {
     getCars()
   }, [])
 
+  useEffect(() => {
+    function updateCars(){
+      if(car === null){
+        return
+      }
+
+      setCars(prevState => prevState.concat(car))
+    }
+
+    updateCars()
+
+    return () => {}
+  }, [car])
+
   return (
    <>
-    <Form />
+    <Form setCar={setCar}/>
     <Table cars={cars}/>
    </>
   );

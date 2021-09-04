@@ -19,7 +19,18 @@ const Table = ({ cars }: TableProps) => {
         </thead>
 
         <tbody>
-          {cars.length === 0 && <td colSpan={6}>Nenhum carro cadastrado</td>}
+          {cars.length === 0 && <tr><td colSpan={6}>Nenhum carro cadastrado</td></tr> }
+          {cars.map(({ image, brandModel, plate, year, color }) => {
+            return (
+              <tr key={plate}>
+                <td><img width="100px" src={image} alt={brandModel}/></td>
+                <td>{brandModel}</td>
+                <td>{plate}</td>
+                <td>{year}</td>
+                <td>{color}</td>
+              </tr>
+            )
+          })}
         </tbody>
       </table>
   )
