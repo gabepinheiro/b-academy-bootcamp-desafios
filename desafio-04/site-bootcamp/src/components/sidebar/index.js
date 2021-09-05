@@ -1,4 +1,5 @@
-import { H2 } from "./heading"
+import { H2 } from "../heading"
+import { Item, List, Wrapper } from "./styles"
 
 function Sidebar({ articles, setTitle, setContent }){
   function handleClick(e, { title, content }) {
@@ -9,22 +10,21 @@ function Sidebar({ articles, setTitle, setContent }){
   }
 
   return (
-    <aside className="sidebar">
+    <Wrapper>
       <H2 children="Sidebar" />
-      <ul>
+      <List>
         {articles.map(article => (
-          <li>
+          <Item key={article.title}>
             <a
-              key={article.title}
               href={`article/${article.slug}`}
               onClick={(e) => handleClick(e, article)}
             >
               {article.title}
             </a>
-          </li>
+          </Item>
         ))}
-      </ul>
-    </aside>
+      </List>
+    </Wrapper>
   )
 }
 

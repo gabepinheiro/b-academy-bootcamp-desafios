@@ -1,8 +1,10 @@
+import { Wrapper } from "./styles"
+
 function Container({children}){
   return (
-    <div className="container">
+    <Wrapper>
       {children}
-    </div>
+    </Wrapper>
   )
 }
 

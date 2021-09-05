@@ -1,13 +1,27 @@
 import { useState } from 'react'
+import { createGlobalStyle } from 'styled-components'
 
-import Container from "./container"
-import ContainerFlex from "./container-flex"
-import Content from "./content"
-import FlexItem from "./flex-item"
-import Footer from "./footer"
-import Header from "./header"
-import Menu from "./menu"
-import Sidebar from "./sidebar"
+import Container from "./components/container"
+import ContainerFlex from "./components/container-flex"
+import FlexItem from "./components/flex-item"
+import Header from "./components/header"
+import Menu from "./components/menu"
+import Sidebar from "./components/sidebar"
+import Content from "./components/content"
+import Footer from "./components/footer"
+
+const GlobalStyle = createGlobalStyle`
+  * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, #root {
+  width:100%;
+  height: 100vh;
+}
+`
 
 const articles = [
   {
@@ -41,27 +55,30 @@ function App(){
   const [content, setContent] = useState(articles[0].content)
 
   return (
-    <Container>
-      <ContainerFlex flexDirection="column">
-        <Header />
-        <Menu />
+    <>
+      <GlobalStyle />
+      <Container>
+        <ContainerFlex flexDirection="column">
+          <Header />
+          <Menu />
 
-      <FlexItem flexGrow="1">
-        <ContainerFlex>
-          <Sidebar 
-            articles={articles}
-            setTitle={setTitle}
-            setContent={setContent}
-          />
-          <FlexItem flexGrow="1">
-            <Content title={title} content={content} />
-          </FlexItem>
+        <FlexItem flexGrow="1">
+          <ContainerFlex>
+            <Sidebar 
+              articles={articles}
+              setTitle={setTitle}
+              setContent={setContent}
+            />
+            <FlexItem flexGrow="1">
+              <Content title={title} content={content} />
+            </FlexItem>
+          </ContainerFlex>
+        </FlexItem>  
+
+          <Footer />
         </ContainerFlex>
-      </FlexItem>  
-
-        <Footer />
-      </ContainerFlex>
-    </Container>
+      </Container>
+    </>
   )
 }
 

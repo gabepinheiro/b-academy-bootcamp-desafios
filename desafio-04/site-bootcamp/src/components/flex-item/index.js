@@ -1,8 +1,10 @@
+import { Wrapper } from "./styles"
+
 function FlexItem({children, flexGrow}){
   return (
-    <div className={`flex-item ${!!flexGrow && 'flex-grow'}`}>
+    <Wrapper flexGrow={flexGrow}>
       {children}
-    </div>
+    </Wrapper>
   )
 }
 
