@@ -1,25 +1,15 @@
-import { useState } from "react";
-import Button from "./components/Button";
-import Container from "./components/Container";
-import Content from "./components/Content";
-import FlexContainer from "./components/Flex/FlexContainer";
-import FlexItem from "./components/Flex/FlexItem";
-import Footer from "./components/Footer";
-import Header from "./components/Header";
-import Link from "./components/Link";
-import Logo from "./components/Logo";
-import Menu from "./components/Menu";
-import Navigation from "./components/Navigation";
-import Sidebar from "./components/Sidebar";
+import { useState } from 'react'
 
-export type Article  = {
-  id: number
-  title: string
-  content: string
-  slug: string
-}
+import Container from "./container"
+import ContainerFlex from "./container-flex"
+import Content from "./content"
+import FlexItem from "./flex-item"
+import Footer from "./footer"
+import Header from "./header"
+import Menu from "./menu"
+import Sidebar from "./sidebar"
 
-const articles: Article[] = [
+const articles = [
   {
     id: 1,
     title: 'JavaScript',
@@ -46,43 +36,33 @@ const articles: Article[] = [
   },
 ]
 
-const App = () => {
+function App(){
   const [title, setTitle] = useState(articles[0].title)
   const [content, setContent] = useState(articles[0].content)
 
   return (
-      <Container>
-        <Header>
-          <Logo />
-        </Header>
+    <Container>
+      <ContainerFlex flexDirection="column">
+        <Header />
+        <Menu />
 
-        <Menu>
-          <Navigation>
-            <Link href="#">Home</Link>
-            <Link href="#">About</Link>
-            <Link href="#">Contact</Link>
-            <Button kind="secondary">Sign in</Button>
-          </Navigation>
-        </Menu>
-
+      <FlexItem flexGrow="1">
+        <ContainerFlex>
+          <Sidebar 
+            articles={articles}
+            setTitle={setTitle}
+            setContent={setContent}
+          />
           <FlexItem flexGrow="1">
-            <FlexContainer>
-              <Sidebar 
-                articles={articles}
-                setTitle={setTitle}
-                setContent={setContent}/>
-
-              <FlexItem>
-                <Content title={title} content={content}/>
-            </FlexItem>
-            </FlexContainer>
+            <Content title={title} content={content} />
           </FlexItem>
-          
-        <Footer>
-          <p>Brainn</p>
-        </Footer>
-      </Container>
-   )
+        </ContainerFlex>
+      </FlexItem>  
+
+        <Footer />
+      </ContainerFlex>
+    </Container>
+  )
 }
 
 export default App
