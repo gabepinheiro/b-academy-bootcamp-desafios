@@ -1,20 +1,30 @@
-import { Car, url } from "../../App"
+import { Car, MessageState, url } from "../../App"
 import { del } from "../../http"
 
 type TableProps = {
   cars: Car[]
   setCars: (cars: Car[]) => void
+  setMessage: React.Dispatch<React.SetStateAction<MessageState>>
 }
 
-const Table = ({ cars, setCars }: TableProps) => {
+const Table = ({ cars, setCars, setMessage }: TableProps) => {
   const handleDelete = async (plate: string) => {
     const result = await del(url, { plate: plate ?? '' })
 
     if (result.error) {
-      console.log('erro ao deletar', result.message)
+      setMessage({
+        text: result.message,
+        status: 'fail',
+        show: true
+      })
       return
     }
 
+    setMessage({
+      text: result.message,
+      status: 'success',
+      show: true
+    })
     setCars([...cars].filter(car => car.plate !== plate))
   }
   return (

@@ -16,6 +16,7 @@ body, #root{
   align-items: center;
   gap: 1.5rem;
   padding: 1rem;
+  position: relative;
 }
 
 form {
@@ -81,6 +82,25 @@ img {
   object-fit: cover;
 }
 
+.message {
+  padding: 8px 1rem;
+  border: 1px solid #eee;
+  background-color: white;
+  border-radius: 5px;
+  position: absolute;
+  top:5vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+}
 
+.success {
+  color: green
+}
 
-
+.fail {
+  color: red
+}

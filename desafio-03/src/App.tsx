@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 
 import Form from './components/Form'
+import Message from './components/Message'
 import Table from './components/Table'
 import { get } from './http'
 
@@ -15,9 +16,16 @@ export type Car = {
   color: string
 }
 
+export type MessageState = {
+   text: string
+   show: boolean,
+   status: string 
+}
+
 function App() {
   const [car, setCar] = useState<Car | null>(null)
   const [cars, setCars] = useState<Car[]>([])
+  const [message, setMessage] = useState({ text: '', show: false, status: '' })
 
   useEffect(() => {
     const getCars = async () => {
@@ -44,8 +52,15 @@ function App() {
 
   return (
    <>
-    <Form setCar={setCar}/>
-    <Table cars={cars} setCars={setCars}/>
+    {message.show && <Message 
+                       status={message.status}
+                       setMessage={setMessage}
+                      >
+                       {message.text}
+                    </Message>}
+
+    <Form setCar={setCar} setMessage={setMessage} />
+    <Table cars={cars} setCars={setCars} setMessage={setMessage} />
    </>
   );
 }

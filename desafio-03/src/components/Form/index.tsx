@@ -1,10 +1,11 @@
-import { Car } from "../../App"
+import { Car, MessageState } from "../../App"
 import { post } from "../../http"
 import { url } from '../../App'
 import React, { useState } from "react"
 
 type FormProps = {
   setCar: (car: Car) => void
+  setMessage: React.Dispatch<React.SetStateAction<MessageState>>
 }
 
 const initialState = {
@@ -15,7 +16,7 @@ const initialState = {
     year: ''
 }
 
-const Form = ({ setCar }: FormProps) => {
+const Form = ({ setCar, setMessage }: FormProps) => {
   const [carFields, setCarFields] = useState<Car>(initialState)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,10 +32,19 @@ const Form = ({ setCar }: FormProps) => {
     const result = await post(url, carFields)
 
     if (result.error) {
-      console.log('deu erro na hora de cadastrar', result.message)
+      setMessage({
+        text: result.message,
+        status: 'fail',
+        show: true
+      })
       return
     }
 
+    setMessage({
+      text: result.message,
+      status: 'success',
+      show: true
+    })
     setCar({...carFields})
     setCarFields({...initialState})
   }
