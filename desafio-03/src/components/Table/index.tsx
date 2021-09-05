@@ -18,7 +18,7 @@ const Table = ({ cars, setCars }: TableProps) => {
     setCars([...cars].filter(car => car.plate !== plate))
   }
   return (
-    <table style={{"borderWidth":"1px", 'borderStyle':'solid'}}>
+    <table>
         <thead>
           <tr>
             <th>Imagem</th>
@@ -36,11 +36,11 @@ const Table = ({ cars, setCars }: TableProps) => {
           {cars.map(({ image, brandModel, plate, year, color }) => {
             return (
               <tr key={plate}>
-                <td><img width="100px" src={image} alt={brandModel}/></td>
+                <td><img width="125px" height="45px" src={image} alt={brandModel}/></td>
                 <td>{brandModel}</td>
                 <td>{plate}</td>
                 <td>{year}</td>
-                <td>{color}</td>
+                <td style={{backgroundColor: color}}>{color}</td>
                 <td>
                   <button 
                     onClick={() => handleDelete(plate)}

@@ -41,49 +41,51 @@ const Form = ({ setCar }: FormProps) => {
 
   return (
     <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="image">Imagem (URL)</label>
-          <input 
-            autoFocus
-            value={carFields.image}
-            onChange={handleChange}
-            type="text" id="image" name="image" />
-        </div>
+      <h1>Cadastre seus Carros</h1>
 
-        <div>
-          <label htmlFor="brand-model">Marca / Modelo</label>
-          <input 
-            value={carFields.brandModel}
-            onChange={handleChange}
-            type="text" id="brand-model" name="brandModel" />
-        </div>
+      <div className="form-control">
+        <label htmlFor="image">Imagem (URL)</label>
+        <input 
+          autoFocus={true}
+          value={carFields.image}
+          onChange={handleChange}
+          type="text" id="image" name="image" />
+      </div>
 
-        <div>
-          <label htmlFor="year">Ano</label>
-          <input 
-            value={carFields.year}
-            onChange={handleChange}
-            type="number" id="year" name="year" />
-        </div>
+      <div className="form-control">
+        <label htmlFor="brand-model">Marca / Modelo</label>
+        <input 
+          value={carFields.brandModel}
+          onChange={handleChange}
+          type="text" id="brand-model" name="brandModel" />
+      </div>
 
-        <div>
-          <label htmlFor="plate">Placa</label>
-          <input 
-            value={carFields.plate}
-            onChange={handleChange}
-            type="text" id="plate" name="plate" />
-        </div>
+      <div className="form-control">
+        <label htmlFor="year">Ano</label>
+        <input 
+          value={carFields.year}
+          onChange={handleChange}
+          type="number" id="year" name="year" />
+      </div>
 
-        <div>
-          <label htmlFor="color">Cor</label>
-          <input 
-            value={carFields.color}
-            onChange={handleChange}
-            type="text" id="color" name="color" />
-        </div>
+      <div className="form-control">
+        <label htmlFor="plate">Placa</label>
+        <input 
+          value={carFields.plate}
+          onChange={handleChange}
+          type="text" id="plate" name="plate" />
+      </div>
 
-        <button type="submit">Cadastrar carro</button>
-      </form>
+      <div className="form-control">
+        <label htmlFor="color">Cor</label>
+        <input 
+          value={carFields.color}
+          onChange={handleChange}
+          type="text" id="color" name="color" />
+      </div>
+
+      <button type="submit">Cadastrar</button>
+    </form>
   )
 }
 
