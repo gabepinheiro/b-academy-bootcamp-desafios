@@ -48,8 +48,8 @@ const Table = ({ cars, setCars, setMessage }: TableProps) => {
               <tr key={plate}>
                 <td><img width="125px" height="45px" src={image} alt={brandModel}/></td>
                 <td>{brandModel}</td>
-                <td>{plate}</td>
                 <td>{year}</td>
+                <td>{plate}</td>
                 <td style={{backgroundColor: color}}>{color}</td>
                 <td>
                   <button 
