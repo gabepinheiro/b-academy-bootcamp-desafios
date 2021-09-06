@@ -26,8 +26,13 @@ const Form = ({ setCar, setMessage }: FormProps) => {
     }))
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    
+    const target = e.target as HTMLFormElement
+    if(!target){
+      return
+    }
 
     const result = await post(url, carFields)
 
@@ -45,8 +50,12 @@ const Form = ({ setCar, setMessage }: FormProps) => {
       status: 'success',
       show: true
     })
+
     setCar({...carFields})
     setCarFields({...initialState})
+
+    const image = target.elements.namedItem('image') as HTMLInputElement
+    image.focus()
   }
 
   return (
@@ -56,7 +65,7 @@ const Form = ({ setCar, setMessage }: FormProps) => {
       <div className="form-control">
         <label htmlFor="image">Imagem (URL)</label>
         <input 
-          autoFocus={true}
+          autoFocus
           value={carFields.image}
           onChange={handleChange}
           type="text" id="image" name="image" />
