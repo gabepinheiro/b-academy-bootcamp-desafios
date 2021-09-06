@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
 import { useState } from 'react'
 
-import Form from './components/Form'
-import Message from './components/Message'
-import Table from './components/Table'
+import Form from './components/form'
+import Message from './components/message'
+import Table from './components/table'
 import { get } from './http'
 
 export const url = 'http://localhost:3333/cars'

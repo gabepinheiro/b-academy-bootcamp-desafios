@@ -1,5 +1,7 @@
-import { Car, MessageState, url } from "../../App"
+import { Car, MessageState, url } from "../../app"
 import { del } from "../../http"
+import Button from "../button"
+import { Wrapper } from "./styles"
 
 type TableProps = {
   cars: Car[]
@@ -28,7 +30,7 @@ const Table = ({ cars, setCars, setMessage }: TableProps) => {
     setCars([...cars].filter(car => car.plate !== plate))
   }
   return (
-    <table>
+    <Wrapper>
         <thead>
           <tr>
             <th>Imagem</th>
@@ -48,21 +50,21 @@ const Table = ({ cars, setCars, setMessage }: TableProps) => {
               <tr key={plate}>
                 <td><img width="125px" height="45px" src={image} alt={brandModel}/></td>
                 <td>{brandModel}</td>
-                <td>{plate}</td>
                 <td>{year}</td>
+                <td>{plate}</td>
                 <td style={{backgroundColor: color}}>{color}</td>
                 <td>
-                  <button 
+                  <Button
                     onClick={() => handleDelete(plate)}
                   >
                     Deletar
-                  </button>
+                  </Button>
                 </td>
               </tr>
             )
           })}
         </tbody>
-      </table>
+      </Wrapper>
   )
 }
 

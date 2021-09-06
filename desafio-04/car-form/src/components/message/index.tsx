@@ -1,6 +1,8 @@
-import { MessageState } from "../../App"
+import { MessageState } from "../../app"
+import Button from "../button"
+import { Wrapper } from "./styles"
 
-type MessageProps = {
+export type MessageProps = {
   children: React.ReactNode
   status: string
   setMessage: React.Dispatch<React.SetStateAction<MessageState>>
@@ -12,10 +14,10 @@ const Message = ({ children, status, setMessage}: MessageProps) => {
   } 
 
   return (
-    <div className={`message ${status}`}>
+    <Wrapper status={status}>
       {children}
-      <button onClick={handleClick}>OK</button>
-    </div>
+      <Button onClick={handleClick}>OK</Button>
+    </Wrapper>
   )
 }
 

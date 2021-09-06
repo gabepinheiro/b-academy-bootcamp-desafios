@@ -1,7 +1,9 @@
-import { Car, MessageState } from "../../App"
+import { Car, MessageState } from "../../app"
 import { post } from "../../http"
-import { url } from '../../App'
+import { url } from '../../app'
 import React, { useState } from "react"
+import { FormControl, Input, Label, Wrapper } from "./styles"
+import Button from "../button"
 
 type FormProps = {
   setCar: (car: Car) => void
@@ -26,7 +28,7 @@ const Form = ({ setCar, setMessage }: FormProps) => {
     }))
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     const result = await post(url, carFields)
@@ -45,57 +47,66 @@ const Form = ({ setCar, setMessage }: FormProps) => {
       status: 'success',
       show: true
     })
+    
     setCar({...carFields})
     setCarFields({...initialState})
+
+    const target = e.target as HTMLFormElement
+    if(!target){
+      return
+    }
+
+    const image = target.elements.namedItem('image') as HTMLInputElement
+    image.focus()
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <Wrapper onSubmit={handleSubmit}>
       <h1>Cadastre seus Carros</h1>
 
-      <div className="form-control">
-        <label htmlFor="image">Imagem (URL)</label>
-        <input 
-          autoFocus={true}
+      <FormControl>
+        <Label htmlFor="image">Imagem (URL)</Label>
+        <Input
+          autoFocus
           value={carFields.image}
           onChange={handleChange}
           type="text" id="image" name="image" />
-      </div>
+      </FormControl>
 
-      <div className="form-control">
-        <label htmlFor="brand-model">Marca / Modelo</label>
-        <input 
+      <FormControl>
+        <Label htmlFor="brand-model">Marca / Modelo</Label>
+        <Input 
           value={carFields.brandModel}
           onChange={handleChange}
           type="text" id="brand-model" name="brandModel" />
-      </div>
+      </FormControl>
 
-      <div className="form-control">
-        <label htmlFor="year">Ano</label>
-        <input 
+      <FormControl>
+        <Label htmlFor="year">Ano</Label>
+        <Input 
           value={carFields.year}
           onChange={handleChange}
           type="number" id="year" name="year" />
-      </div>
+      </FormControl>
 
-      <div className="form-control">
-        <label htmlFor="plate">Placa</label>
-        <input 
+      <FormControl>
+        <Label htmlFor="plate">Placa</Label>
+        <Input
           value={carFields.plate}
           onChange={handleChange}
           type="text" id="plate" name="plate" />
-      </div>
+      </FormControl>
 
-      <div className="form-control">
-        <label htmlFor="color">Cor</label>
-        <input 
+      <FormControl>
+        <Label htmlFor="color">Cor</Label>
+        <Input 
           value={carFields.color}
           onChange={handleChange}
           type="text" id="color" name="color" />
-      </div>
+      </FormControl>
 
-      <button type="submit">Cadastrar</button>
-    </form>
+      <Button type="submit">Cadastrar</Button>
+    </Wrapper>
   )
 }
 
