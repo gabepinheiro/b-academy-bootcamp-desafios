@@ -4,7 +4,7 @@ import { url } from '../../App'
 import React from "react"
 
 type FormProps = {
-  setCar: (car: Car) => void
+  updateCar: (car: Car) => void
   setMessage: React.Dispatch<React.SetStateAction<MessageState>>
 }
 
@@ -16,7 +16,7 @@ const getFormElement: GetFormElement = (target) => (elementName) => {
   return target[elementName]
 }
 
-const Form = ({ setCar, setMessage }: FormProps) => {
+const Form = ({ updateCar, setMessage }: FormProps) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
@@ -26,7 +26,7 @@ const Form = ({ setCar, setMessage }: FormProps) => {
 
     const inputImage = getElement('image')
 
-    const car = {
+    const car: Car = {
         image: inputImage.value,
         brandModel: getElement('brandModel').value,
         year: getElement('year').value,
@@ -51,7 +51,7 @@ const Form = ({ setCar, setMessage }: FormProps) => {
       show: true
     })
 
-    setCar({...car})
+    updateCar({...car})
 
     target.reset();
     inputImage.focus()

@@ -50,6 +50,8 @@ function App() {
     return () => {}
   }, [car])
 
+  const updateCar = (car: Car) => setCar({...car})
+
   return (
    <>
     {message.show && <Message 
@@ -59,7 +61,7 @@ function App() {
                        {message.text}
                     </Message>}
 
-    <Form setCar={setCar} setMessage={setMessage} />
+    <Form updateCar={updateCar} setMessage={setMessage} />
     <Table cars={cars} setCars={setCars} setMessage={setMessage} />
    </>
   );
