@@ -1,40 +1,40 @@
 import { Car, MessageState } from "../../App"
 import { post } from "../../http"
 import { url } from '../../App'
-import React, { useState } from "react"
+import React from "react"
 
 type FormProps = {
   setCar: (car: Car) => void
   setMessage: React.Dispatch<React.SetStateAction<MessageState>>
 }
 
-const initialState = {
-    brandModel: '',
-    color: '',
-    image: '',
-    plate: '',
-    year: ''
+type GetFormElement = (target: HTMLFormElement) =>
+  (elementName: string) =>
+  HTMLInputElement
+
+const getFormElement: GetFormElement = (target) => (elementName) => {
+  return target[elementName]
 }
 
 const Form = ({ setCar, setMessage }: FormProps) => {
-  const [carFields, setCarFields] = useState<Car>(initialState)
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCarFields((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }))
-  }
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    
-    const target = e.target as HTMLFormElement
-    if(!target){
-      return
-    }
 
-    const result = await post(url, carFields)
+    const target = e.target as HTMLFormElement
+
+    const getElement = getFormElement(target)
+
+    const inputImage = getElement('image')
+
+    const car = {
+        image: inputImage.value,
+        brandModel: getElement('brandModel').value,
+        year: getElement('year').value,
+        color: getElement('color').value,
+        plate: getElement('plate').value,
+    }
+    
+    const result = await post(url, car)
 
     if (result.error) {
       setMessage({
@@ -51,11 +51,10 @@ const Form = ({ setCar, setMessage }: FormProps) => {
       show: true
     })
 
-    setCar({...carFields})
-    setCarFields({...initialState})
+    setCar({...car})
 
-    const image = target.elements.namedItem('image') as HTMLInputElement
-    image.focus()
+    target.reset();
+    inputImage.focus()
   }
 
   return (
@@ -64,43 +63,27 @@ const Form = ({ setCar, setMessage }: FormProps) => {
 
       <div className="form-control">
         <label htmlFor="image">Imagem (URL)</label>
-        <input 
-          autoFocus
-          value={carFields.image}
-          onChange={handleChange}
-          type="text" id="image" name="image" />
+        <input autoFocus type="text" id="image" name="image" />
       </div>
 
       <div className="form-control">
         <label htmlFor="brand-model">Marca / Modelo</label>
-        <input 
-          value={carFields.brandModel}
-          onChange={handleChange}
-          type="text" id="brand-model" name="brandModel" />
+        <input type="text" id="brandModel" name="brandModel" />
       </div>
 
       <div className="form-control">
         <label htmlFor="year">Ano</label>
-        <input 
-          value={carFields.year}
-          onChange={handleChange}
-          type="number" id="year" name="year" />
+        <input type="number" id="year" name="year" />
       </div>
 
       <div className="form-control">
         <label htmlFor="plate">Placa</label>
-        <input 
-          value={carFields.plate}
-          onChange={handleChange}
-          type="text" id="plate" name="plate" />
+        <input type="text" id="plate" name="plate" />
       </div>
 
       <div className="form-control">
         <label htmlFor="color">Cor</label>
-        <input 
-          value={carFields.color}
-          onChange={handleChange}
-          type="text" id="color" name="color" />
+        <input type="text" id="color" name="color" />
       </div>
 
       <button type="submit">Cadastrar</button>
