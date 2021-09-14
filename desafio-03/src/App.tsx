@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 
 import Form from './components/Form'
-import Message from './components/Message'
+import Message, { MessageProps } from './components/Message'
 import Table from './components/Table'
 import { get } from './http'
 
@@ -16,16 +16,12 @@ export type Car = {
   color: string
 }
 
-export type MessageState = {
-   text: string
-   show: boolean,
-   status: string 
-}
+type MessageState = Pick<MessageProps, 'text' | 'status' | 'show'>
 
 function App() {
   const [car, setCar] = useState<Car | null>(null)
   const [cars, setCars] = useState<Car[]>([])
-  const [message, setMessage] = useState({ text: '', show: false, status: '' })
+  const [message, setMessage] = useState<MessageState>({ text: '', status: '', show: false })
 
   useEffect(() => {
     const getCars = async () => {
@@ -52,17 +48,21 @@ function App() {
 
   const updateCar = (car: Car) => setCar({...car})
 
+  const updateMessage = (message: MessageState) => setMessage({...message})
+
+  const isShowMessage = (show: boolean) => setMessage(prev => ({...prev, show}))
+
   return (
    <>
     {message.show && <Message 
                        status={message.status}
-                       setMessage={setMessage}
+                       isShowMessage={isShowMessage}
                       >
                        {message.text}
                     </Message>}
 
-    <Form updateCar={updateCar} setMessage={setMessage} />
-    <Table cars={cars} setCars={setCars} setMessage={setMessage} />
+    <Form updateCar={updateCar} updateMessage={updateMessage} />
+    <Table cars={cars} setCars={setCars} updateMessage={updateMessage} />
    </>
   );
 }

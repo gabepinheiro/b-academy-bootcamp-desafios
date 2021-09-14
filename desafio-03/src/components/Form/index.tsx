@@ -1,22 +1,22 @@
-import { Car, MessageState } from "../../App"
+import { Car } from "../../App"
 import { post } from "../../http"
 import { url } from '../../App'
 import React from "react"
+import { MessageProps } from "../Message"
 
 type FormProps = {
   updateCar: (car: Car) => void
-  setMessage: React.Dispatch<React.SetStateAction<MessageState>>
+  updateMessage: (message: Pick<MessageProps, 'text' | 'show' | 'status'> ) => void 
 }
 
 type GetFormElement = (target: HTMLFormElement) =>
-  (elementName: string) =>
-  HTMLInputElement
+  (elementName: string) => HTMLInputElement
 
 const getFormElement: GetFormElement = (target) => (elementName) => {
   return target[elementName]
 }
 
-const Form = ({ updateCar, setMessage }: FormProps) => {
+const Form = ({ updateCar, updateMessage }: FormProps) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
@@ -37,7 +37,7 @@ const Form = ({ updateCar, setMessage }: FormProps) => {
     const result = await post(url, car)
 
     if (result.error) {
-      setMessage({
+      updateMessage({
         text: result.message,
         status: 'fail',
         show: true
@@ -45,7 +45,7 @@ const Form = ({ updateCar, setMessage }: FormProps) => {
       return
     }
 
-    setMessage({
+    updateMessage({
       text: result.message,
       status: 'success',
       show: true

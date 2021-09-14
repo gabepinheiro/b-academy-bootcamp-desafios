@@ -1,18 +1,19 @@
-import { Car, MessageState, url } from "../../App"
+import { Car, url } from "../../App"
 import { del } from "../../http"
+import { MessageProps } from "../Message"
 
 type TableProps = {
   cars: Car[]
   setCars: (cars: Car[]) => void
-  setMessage: React.Dispatch<React.SetStateAction<MessageState>>
+  updateMessage: (message: Pick<MessageProps, 'text' | 'show' | 'status'> ) => void 
 }
 
-const Table = ({ cars, setCars, setMessage }: TableProps) => {
+const Table = ({ cars, setCars, updateMessage }: TableProps) => {
   const handleDelete = async (plate: string) => {
     const result = await del(url, { plate: plate ?? '' })
 
     if (result.error) {
-      setMessage({
+      updateMessage({
         text: result.message,
         status: 'fail',
         show: true
@@ -20,7 +21,7 @@ const Table = ({ cars, setCars, setMessage }: TableProps) => {
       return
     }
 
-    setMessage({
+    updateMessage({
       text: result.message,
       status: 'success',
       show: true
