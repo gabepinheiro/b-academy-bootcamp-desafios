@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 
 import Form from './components/form'
-import Message from './components/message'
+import Message, { MessageProps } from './components/message'
 import Table from './components/table'
 import { get } from './http'
 
@@ -16,16 +16,11 @@ export type Car = {
   color: string
 }
 
-export type MessageState = {
-   text: string
-   show: boolean,
-   status: string 
-}
+type MessageState = Pick<MessageProps, 'text' | 'status' | 'show'>
 
 function App() {
-  const [car, setCar] = useState<Car | null>(null)
   const [cars, setCars] = useState<Car[]>([])
-  const [message, setMessage] = useState({ text: '', show: false, status: '' })
+  const [message, setMessage] = useState<MessageState>({ text: '', status: '', show: false })
 
   useEffect(() => {
     const getCars = async () => {
@@ -36,31 +31,28 @@ function App() {
     getCars()
   }, [])
 
-  useEffect(() => {
-    function updateCars(){
-      if(car === null){
-        return
-      }
+  const updateCars = (car: Car) => setCars(prevState => prevState.concat(car))
 
-      setCars(prevState => prevState.concat(car))
-    }
+  const deleteCar = (plate: string) => 
+    setCars(prevState => prevState.filter(car => car.plate !== plate))
 
-    updateCars()
+  const updateMessage = (message: MessageState) => setMessage({...message})
 
-    return () => {}
-  }, [car])
+  const isShowMessage = (show: boolean) => setMessage(prev => ({...prev, show}))
 
   return (
    <>
-    {message.show && <Message 
-                       status={message.status}
-                       setMessage={setMessage}
-                      >
-                       {message.text}
-                    </Message>}
+    {message.show && ( 
+      <Message 
+          status={message.status}
+          isShowMessage={isShowMessage}
+      >
+          {message.text}
+      </Message>
+    )}
 
-    <Form setCar={setCar} setMessage={setMessage} />
-    <Table cars={cars} setCars={setCars} setMessage={setMessage} />
+    <Form updateCars={updateCars} updateMessage={updateMessage} />
+    <Table cars={cars} deleteCar={deleteCar} updateMessage={updateMessage} />
    </>
   );
 }

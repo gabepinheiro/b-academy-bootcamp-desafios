@@ -1,20 +1,21 @@
-import { Car, MessageState, url } from "../../app"
+import { Car, url } from "../../app"
 import { del } from "../../http"
 import Button from "../button"
+import { MessageProps } from "../message"
 import { Wrapper } from "./styles"
 
 type TableProps = {
   cars: Car[]
-  setCars: (cars: Car[]) => void
-  setMessage: React.Dispatch<React.SetStateAction<MessageState>>
+  deleteCar: (plate: string) => void
+  updateMessage: (message: Pick<MessageProps, 'text' | 'show' | 'status'> ) => void 
 }
 
-const Table = ({ cars, setCars, setMessage }: TableProps) => {
+const Table = ({ cars, deleteCar, updateMessage }: TableProps) => {
   const handleDelete = async (plate: string) => {
     const result = await del(url, { plate: plate ?? '' })
 
     if (result.error) {
-      setMessage({
+      updateMessage({
         text: result.message,
         status: 'fail',
         show: true
@@ -22,13 +23,15 @@ const Table = ({ cars, setCars, setMessage }: TableProps) => {
       return
     }
 
-    setMessage({
+    updateMessage({
       text: result.message,
       status: 'success',
       show: true
     })
-    setCars([...cars].filter(car => car.plate !== plate))
+    
+    deleteCar(plate)
   }
+
   return (
     <Wrapper>
         <thead>

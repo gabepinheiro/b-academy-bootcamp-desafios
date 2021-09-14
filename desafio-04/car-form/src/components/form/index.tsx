@@ -1,40 +1,43 @@
-import { Car, MessageState } from "../../app"
+import { Car, url } from "../../app"
 import { post } from "../../http"
-import { url } from '../../app'
-import React, { useState } from "react"
-import { FormControl, Input, Label, Wrapper } from "./styles"
 import Button from "../button"
+import { MessageProps } from "../message"
+import { FormControl, Input, Wrapper, Label } from "./styles"
 
 type FormProps = {
-  setCar: (car: Car) => void
-  setMessage: React.Dispatch<React.SetStateAction<MessageState>>
+  updateCars: (car: Car) => void
+  updateMessage: (message: Pick<MessageProps, 'text' | 'show' | 'status'> ) => void 
 }
 
-const initialState = {
-    brandModel: '',
-    color: '',
-    image: '',
-    plate: '',
-    year: ''
+type GetFormElement = (target: HTMLFormElement) =>
+  (elementName: string) => HTMLInputElement
+
+const getFormElement: GetFormElement = (target) => (elementName) => {
+  return target[elementName]
 }
 
-const Form = ({ setCar, setMessage }: FormProps) => {
-  const [carFields, setCarFields] = useState<Car>(initialState)
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCarFields((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }))
-  }
-
+const Form = ({ updateCars, updateMessage }: FormProps) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    
+    const target = e.target as HTMLFormElement
 
-    const result = await post(url, carFields)
+    const getElement = getFormElement(target)
+
+    const inputImage = getElement('image')
+
+    const car: Car = {
+        image: inputImage.value,
+        brandModel: getElement('brandModel').value,
+        year: getElement('year').value,
+        color: getElement('color').value,
+        plate: getElement('plate').value,
+    }
+    
+    const result = await post(url, car)
 
     if (result.error) {
-      setMessage({
+      updateMessage({
         text: result.message,
         status: 'fail',
         show: true
@@ -42,22 +45,16 @@ const Form = ({ setCar, setMessage }: FormProps) => {
       return
     }
 
-    setMessage({
+    updateMessage({
       text: result.message,
       status: 'success',
       show: true
     })
-    
-    setCar({...carFields})
-    setCarFields({...initialState})
 
-    const target = e.target as HTMLFormElement
-    if(!target){
-      return
-    }
+    updateCars(car)
 
-    const image = target.elements.namedItem('image') as HTMLInputElement
-    image.focus()
+    target.reset();
+    inputImage.focus()
   }
 
   return (
@@ -67,42 +64,27 @@ const Form = ({ setCar, setMessage }: FormProps) => {
       <FormControl>
         <Label htmlFor="image">Imagem (URL)</Label>
         <Input
-          autoFocus
-          value={carFields.image}
-          onChange={handleChange}
-          type="text" id="image" name="image" />
+          autoFocus type="text" id="image" name="image" />
       </FormControl>
 
       <FormControl>
         <Label htmlFor="brand-model">Marca / Modelo</Label>
-        <Input 
-          value={carFields.brandModel}
-          onChange={handleChange}
-          type="text" id="brand-model" name="brandModel" />
+        <Input type="text" id="brand-model" name="brandModel" />
       </FormControl>
 
       <FormControl>
         <Label htmlFor="year">Ano</Label>
-        <Input 
-          value={carFields.year}
-          onChange={handleChange}
-          type="number" id="year" name="year" />
+        <Input type="number" id="year" name="year" />
       </FormControl>
 
       <FormControl>
         <Label htmlFor="plate">Placa</Label>
-        <Input
-          value={carFields.plate}
-          onChange={handleChange}
-          type="text" id="plate" name="plate" />
+        <Input type="text" id="plate" name="plate" />
       </FormControl>
 
       <FormControl>
         <Label htmlFor="color">Cor</Label>
-        <Input 
-          value={carFields.color}
-          onChange={handleChange}
-          type="text" id="color" name="color" />
+        <Input type="text" id="color" name="color" />
       </FormControl>
 
       <Button type="submit">Cadastrar</Button>

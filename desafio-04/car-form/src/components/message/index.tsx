@@ -1,16 +1,18 @@
-import { MessageState } from "../../app"
 import Button from "../button"
 import { Wrapper } from "./styles"
 
 export type MessageProps = {
   children: React.ReactNode
-  status: string
-  setMessage: React.Dispatch<React.SetStateAction<MessageState>>
+  text?: string
+  show?: boolean 
+  status?: string
+  isShowMessage:(show: boolean) => void
+  
 }
 
-const Message = ({ children, status, setMessage}: MessageProps) => {
+const Message = ({ children, status, isShowMessage }: MessageProps) => {
   const handleClick = () => {
-    setMessage(prev => ({...prev, show: false}))
+    isShowMessage(false)
   } 
 
   return (
