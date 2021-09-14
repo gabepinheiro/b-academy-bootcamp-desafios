@@ -4,11 +4,11 @@ import { MessageProps } from "../Message"
 
 type TableProps = {
   cars: Car[]
-  setCars: (cars: Car[]) => void
+  deleteCar: (plate: string) => void
   updateMessage: (message: Pick<MessageProps, 'text' | 'show' | 'status'> ) => void 
 }
 
-const Table = ({ cars, setCars, updateMessage }: TableProps) => {
+const Table = ({ cars, deleteCar, updateMessage }: TableProps) => {
   const handleDelete = async (plate: string) => {
     const result = await del(url, { plate: plate ?? '' })
 
@@ -26,7 +26,8 @@ const Table = ({ cars, setCars, updateMessage }: TableProps) => {
       status: 'success',
       show: true
     })
-    setCars([...cars].filter(car => car.plate !== plate))
+    
+    deleteCar(plate)
   }
   return (
     <table>

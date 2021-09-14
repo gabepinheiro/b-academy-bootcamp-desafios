@@ -5,7 +5,7 @@ import React from "react"
 import { MessageProps } from "../Message"
 
 type FormProps = {
-  updateCar: (car: Car) => void
+  updateCars: (car: Car) => void
   updateMessage: (message: Pick<MessageProps, 'text' | 'show' | 'status'> ) => void 
 }
 
@@ -16,10 +16,10 @@ const getFormElement: GetFormElement = (target) => (elementName) => {
   return target[elementName]
 }
 
-const Form = ({ updateCar, updateMessage }: FormProps) => {
+const Form = ({ updateCars, updateMessage }: FormProps) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-
+    
     const target = e.target as HTMLFormElement
 
     const getElement = getFormElement(target)
@@ -51,7 +51,7 @@ const Form = ({ updateCar, updateMessage }: FormProps) => {
       show: true
     })
 
-    updateCar({...car})
+    updateCars(car)
 
     target.reset();
     inputImage.focus()

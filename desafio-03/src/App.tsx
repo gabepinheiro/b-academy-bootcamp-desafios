@@ -19,7 +19,6 @@ export type Car = {
 type MessageState = Pick<MessageProps, 'text' | 'status' | 'show'>
 
 function App() {
-  const [car, setCar] = useState<Car | null>(null)
   const [cars, setCars] = useState<Car[]>([])
   const [message, setMessage] = useState<MessageState>({ text: '', status: '', show: false })
 
@@ -32,21 +31,10 @@ function App() {
     getCars()
   }, [])
 
-  useEffect(() => {
-    function updateCars(){
-      if(car === null){
-        return
-      }
+  const updateCars = (car: Car) => setCars(prevState => prevState.concat(car))
 
-      setCars(prevState => prevState.concat(car))
-    }
-
-    updateCars()
-
-    return () => {}
-  }, [car])
-
-  const updateCar = (car: Car) => setCar({...car})
+  const deleteCar = (plate: string) => 
+    setCars(prevState => prevState.filter(car => car.plate !== plate))
 
   const updateMessage = (message: MessageState) => setMessage({...message})
 
@@ -61,8 +49,8 @@ function App() {
                        {message.text}
                     </Message>}
 
-    <Form updateCar={updateCar} updateMessage={updateMessage} />
-    <Table cars={cars} setCars={setCars} updateMessage={updateMessage} />
+    <Form updateCars={updateCars} updateMessage={updateMessage} />
+    <Table cars={cars} deleteCar={deleteCar} updateMessage={updateMessage} />
    </>
   );
 }
