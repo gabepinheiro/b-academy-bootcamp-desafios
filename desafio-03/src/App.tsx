@@ -42,13 +42,14 @@ function App() {
 
   return (
    <>
-    {message.show && <Message 
-                       status={message.status}
-                       isShowMessage={isShowMessage}
-                      >
-                       {message.text}
-                    </Message>}
-
+    {message.show && ( 
+      <Message 
+          status={message.status}
+          isShowMessage={isShowMessage}
+      >
+          {message.text}
+      </Message>
+    )}
     <Form updateCars={updateCars} updateMessage={updateMessage} />
     <Table cars={cars} deleteCar={deleteCar} updateMessage={updateMessage} />
    </>
