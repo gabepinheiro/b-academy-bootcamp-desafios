@@ -12,9 +12,8 @@ function Sidebar({ articles, changeArticle }){
       <H2 children="Sidebar" />
       <ul>
         {articles.map(article => (
-          <li>
+          <li key={article.title}>
             <a
-              key={article.title}
               href={`article/${article.slug}`}
               onClick={(e) => handleClick(e, article)}
             >
