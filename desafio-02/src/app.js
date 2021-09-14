@@ -40,6 +40,11 @@ function App(){
   const [title, setTitle] = useState(articles[0].title)
   const [content, setContent] = useState(articles[0].content)
 
+  const changeArticle = (title, content) => {
+    setTitle(title)
+    setContent(content)
+  }
+
   return (
     <Container>
       <ContainerFlex flexDirection="column">
@@ -50,8 +55,7 @@ function App(){
         <ContainerFlex>
           <Sidebar 
             articles={articles}
-            setTitle={setTitle}
-            setContent={setContent}
+            changeArticle={changeArticle}
           />
           <FlexItem flexGrow="1">
             <Content title={title} content={content} />

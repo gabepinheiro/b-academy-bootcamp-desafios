@@ -1,11 +1,10 @@
 import { H2 } from "./heading"
 
-function Sidebar({ articles, setTitle, setContent }){
+function Sidebar({ articles, changeArticle }){
   function handleClick(e, { title, content }) {
     e.preventDefault()
 
-    setTitle(title)
-    setContent(content)
+    changeArticle(title, content)
   }
 
   return (
