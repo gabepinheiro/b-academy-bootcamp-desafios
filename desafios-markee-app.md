@@ -6,4 +6,5 @@
 - [Desafio 08](https://github.com/gabepinheiro/markee/pull/4)
 - [Desafio 09](https://github.com/gabepinheiro/markee/pull/5)
 - [Desafio 10](https://github.com/gabepinheiro/markee/pull/6)
+- [Refactor](https://github.com/gabepinheiro/markee/pull/7)
 - [Deploy](https://markee-app-gabee.netlify.app/)
